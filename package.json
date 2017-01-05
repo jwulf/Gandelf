@@ -10,8 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "@slack/client": "^3.8.1",
-    "@types/slack-node": "^0.1.1",
-    "graygelf": "^1.0.2",
-    "slack-node": "^0.1.8"
+    "graygelf": "^1.0.2"
   }
 }

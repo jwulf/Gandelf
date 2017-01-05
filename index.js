@@ -13,7 +13,7 @@ rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED,  (rtmStartData) => {
 });
 
 rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
-  rtm.sendMessage("Hello!", channel);
+  rtm.sendMessage("Hello!", '#general');
   init = true;
 });
 
