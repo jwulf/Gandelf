@@ -31,15 +31,17 @@ server.on('message', (gelf) => {
 	if (!gelf || !gelf.host || !init) return;
 	const name = short(gelf.host);
 	if (channels[name]) { return announce(`#${name}`, gelf) }
-	announce('#general', gelf);
+	announce('#general', name);
+	console.log(gelf)
 });
 
 server.listen(12201);
 
 const announce = (channel, msg) => { 
 	const send = (text) => { rtm.sendMessage(text, channel, 
-		(err, res) => { if (err) { console.log(err) } }); }
-	if (msg && msg.short_message) { send(msg.shortmessage) }
+		(err, res) => { if (err) { return this } }); }
+	//if (msg && msg.short_message) { send(msg.shortmessage) }
 	if (msg && msg.full_message)  { send(msg.full_message) }
+	console.log(msg.full_message);
 }
 
