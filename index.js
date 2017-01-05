@@ -8,10 +8,11 @@ var channels = {};
 
 server.on('message', (gelf) => {
 	console.log('received message', gelf);
-	if (!channels[gelf.host]) {
-		slack.api('channels.join', { name: gelf.host }, (res) => {
+	const name = short(gelf.host);
+	if (!channels[name]) {
+		slack.api('channels.join', { name }, (res) => {
 			if (res && !res.ok) { return announce('#general', gelf); }
-			channels[gelf.host] = res;
+			channels[name] = res;
 			announce('#general', `New Channel: ${gelf.host}`)
 			return announce(`#${gelf.host}`, gelf);
 		});
@@ -21,6 +22,8 @@ server.on('message', (gelf) => {
 });
 
 server.listen(12201);
+
+const short = (long) => { return long.split('.')[0] }
 
 const joinChannel = (channel, cb) => { slack.api('channels.join', {name: channel}, cb) }
 
