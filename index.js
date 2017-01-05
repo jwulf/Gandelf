@@ -19,8 +19,6 @@ rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, () => {
   init = true;
 });
 
-var WebClient = require('@slack/client').WebClient;
-
 rtm.start();
 
 var channels = {};
