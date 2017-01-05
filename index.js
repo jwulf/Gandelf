@@ -10,21 +10,19 @@ const short = (long) => { return long.split('.')[0] }
 
 const joinChannel = (name, cb) => { slack.api('channels.join', { name }, cb) }
 
+slack.on('channel_joined', (evt) => {
+	channels[evt.channel] = true;
+})
+
 server.on('message', (gelf) => {
 	if (!gelf || !gelf.host) return;
 	const name = short(gelf.host);
-	if (!channels[name]) {
-		joinChannel(name, (res) => {
-			if (res && !res.ok) { console.log(name);
-				return announce('general', gelf); }
-			channels[name] = res;
-			announce('general', `New Channel: ${name}`)
-			return announce(`${name}`, gelf);
-		});
-		return;
+	if (channels[name]) { return announce(`#${name}`, gelf) }
+	announce('#general', gelf);
+	if (channels[name] !== false) { joinChannel(name), (res) => {
+		channels[name] = channels[name] || (res && res.ok)
 	}
-	announce(`${name}`, gelf);
-});
+}});
 
 server.listen(12201);
 
@@ -38,6 +36,6 @@ const announce = (channel, msg) => {
 }
 
 announce(
-	'general',
+	'#general',
 	'A wizard is never late. He arrives precisely when he means to!'
 );
