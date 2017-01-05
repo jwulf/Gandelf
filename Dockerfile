@@ -5,5 +5,5 @@ ADD . .
 
 RUN npm i 
 
-EXPOSE 12201
+EXPOSE 12201/udp
 CMD ["node", "index.js"]
