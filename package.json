@@ -1,0 +1,16 @@
+{
+  "name": "gelf",
+  "version": "1.0.0",
+  "description": "Gelf to Slack bridge for Docker containers",
+  "main": "index.js",
+  "scripts": {
+    "test": "I only test in production."
+  },
+  "author": "Josh Wulf <josh@magikcraft.io>",
+  "license": "ISC",
+  "dependencies": {
+    "@types/slack-node": "^0.1.1",
+    "graygelf": "^1.0.2",
+    "slack-node": "^0.1.8"
+  }
+}
