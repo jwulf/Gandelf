@@ -14,7 +14,8 @@ rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED,  (rtmStartData) => {
 });
 
 rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, () => {
-  rtm.sendMessage("Hello!", '#general');
+	console.log('Yo');
+  rtm.sendMessage("Hello!", '#general', (err, res) => { console.log(err); };
   init = true;
 });
 
@@ -28,6 +29,12 @@ rtm.on('channel_joined', (evt) => {
 	channels[evt.channel] = true;
 })
 
+const announce = (channel, msg) => { 
+	const send = (text) => { limiter.submit(rtm.sendMessage,text, channel, 
+		(err, res) => { if (err) { console.log(err) } }); }
+	if (msg && msg.short_message) { send(msg.shortmessage) }
+}
+
 server.on('message', (gelf) => {
 	if (!gelf || !gelf.host || !init) return;
 	const name = short(gelf.host);
@@ -37,9 +44,5 @@ server.on('message', (gelf) => {
 
 server.listen(12201);
 
-const announce = (channel, msg) => { 
-	const send = (text) => { limiter.submit(rtm.sendMessage,text, channel, 
-		(err, res) => { if (err) { return this } }); }
-	if (msg && msg.short_message) { send(msg.shortmessage) }
-}
+
 
