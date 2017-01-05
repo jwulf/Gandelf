@@ -6,26 +6,27 @@ const server = gelfserver();
 slack = new Slack(apiToken);
 var channels = {};
 
+const short = (long) => { return long.split('.')[0] }
+
+const joinChannel = (name, cb) => { slack.api('channels.join', { name }, cb) }
+
 server.on('message', (gelf) => {
 	if (!gelf || !gelf.host) return;
 	const name = short(gelf.host);
 	if (!channels[name]) {
-		slack.api('channels.join', { name }, (res) => {
-			if (res && !res.ok) { return announce('#general', gelf); }
+		joinChannel(name, (res) => {
+			if (res && !res.ok) { console.log(name);
+				return announce('general', gelf); }
 			channels[name] = res;
-			announce('#general', `New Channel: ${name}`)
-			return announce(`#${name}`, gelf);
+			announce('general', `New Channel: ${name}`)
+			return announce(`${name}`, gelf);
 		});
 		return;
 	}
-	announce(`#${name}`, gelf);
+	announce(`${name}`, gelf);
 });
 
 server.listen(12201);
-
-const short = (long) => { return long.split('.')[0] }
-
-const joinChannel = (name, cb) => { slack.api('channels.join', { name }, cb) }
 
 const announce = (channel, msg) => { 
 	const send = (text) => {
@@ -37,6 +38,6 @@ const announce = (channel, msg) => {
 }
 
 announce(
-	'#general',
+	'general',
 	'A wizard is never late. He arrives precisely when he means to!'
 );
