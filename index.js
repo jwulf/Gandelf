@@ -37,7 +37,8 @@ server.on('message', (gelf) => {
 server.listen(12201);
 
 const announce = (channel, msg) => { 
-	const send = (text) => { rtm.sendMessage(text, channel) }
+	const send = (text) => { rtm.sendMessage(text, channel, 
+		(err, res) => { if (err) { console.log(err) } }); }
 	if (msg && msg.short_message) { send(msg.shortmessage) }
 	if (msg && msg.full_message)  { send(msg.full_message) }
 }
