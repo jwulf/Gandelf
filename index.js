@@ -1,12 +1,13 @@
 const gelfserver = require('graygelf/server')
 const server = gelfserver();
-
+var Bottleneck = require("bottleneck"); 
 var RtmClient = require('@slack/client').RtmClient;
 var CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
 var bot_token = process.env.SLACK_API_TOKEN || '';
 
 var init = false;
 var rtm = new RtmClient(bot_token);
+var limiter = new Bottleneck(1, 800);
 
 rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED,  (rtmStartData) => {
   console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}, but not yet connected to a channel`);
@@ -32,16 +33,13 @@ server.on('message', (gelf) => {
 	const name = short(gelf.host);
 	if (channels[name]) { return announce(`#${name}`, gelf) }
 	announce('#general', name);
-	console.log(gelf)
 });
 
 server.listen(12201);
 
 const announce = (channel, msg) => { 
-	const send = (text) => { rtm.sendMessage(text, channel, 
+	const send = (text) => { limiter.submit(rtm.sendMessage,text, channel, 
 		(err, res) => { if (err) { return this } }); }
-	//if (msg && msg.short_message) { send(msg.shortmessage) }
-	if (msg && msg.full_message)  { send(msg.full_message) }
-	console.log(msg.full_message);
+	if (msg && msg.short_message) { send(msg.shortmessage) }
 }
 

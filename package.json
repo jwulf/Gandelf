@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@slack/client": "^3.8.1",
+    "bottleneck": "^1.15.0",
     "graygelf": "^1.0.2"
   }
 }
