@@ -15,8 +15,8 @@ rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED,  (rtmStartData) => {
 
 rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, () => {
 	console.log('Yo');
-  rtm.sendMessage('#general', "Hello!",  (err, res) => { console.log(err); });
-  init = true;
+	init = true;
+  	rtm.sendMessage('#general', "Hello!",  (err, res) => { console.log(err); });
 });
 
 rtm.start();
@@ -26,6 +26,7 @@ var channels = {};
 const short = (long) => { return long.split('.')[0] }
 
 rtm.on('channel_joined', (evt) => {
+	console.log(evt);
 	channels[evt.channel] = true;
 })
 
