@@ -15,7 +15,7 @@ rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED,  (rtmStartData) => {
 
 rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, () => {
 	console.log('Yo');
-  rtm.sendMessage("Hello!", '#general', (err, res) => { console.log(err); };
+  rtm.sendMessage("Hello!", '#general', (err, res) => { console.log(err); });
   init = true;
 });
 
