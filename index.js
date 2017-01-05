@@ -10,7 +10,7 @@ server.on('message', (gelf) => {
 	console.log('received message', gelf.short_message);
 	if (!channels[gelf.host]) {
 		slack.api('channels.join', { name: gelf.host }, (res) => {
-			if (!res.ok) { return sendToChannel('general', gelf); }
+			if (res && !res.ok) { return sendToChannel('general', gelf); }
 			channels[gelf.host] = res;
 			sendToChannel('general', `New Channel: ${gelf.host}`)
 			return sendToChannel(gelf.host, gelf);
