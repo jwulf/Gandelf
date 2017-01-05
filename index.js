@@ -5,14 +5,14 @@ var RtmClient = require('@slack/client').RtmClient;
 var CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
 var bot_token = process.env.SLACK_API_TOKEN || '';
 
-let init = false;
+var init = false;
 var rtm = new RtmClient(bot_token);
 
 rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED,  (rtmStartData) => {
   console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}, but not yet connected to a channel`);
 });
 
-rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
+rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, () => {
   rtm.sendMessage("Hello!", '#general');
   init = true;
 });
@@ -42,7 +42,3 @@ const announce = (channel, msg) => {
 	if (msg && msg.full_message)  { send(msg.full_message) }
 }
 
-announce(
-	'#general',
-	'A wizard is never late. He arrives precisely when he means to!'
-);
