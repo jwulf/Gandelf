@@ -7,25 +7,25 @@ slack = new Slack(apiToken);
 var channels = {};
 
 server.on('message', (gelf) => {
-	console.log('received message', gelf);
+	if (!gelf || !gelf.host) return;
 	const name = short(gelf.host);
 	if (!channels[name]) {
 		slack.api('channels.join', { name }, (res) => {
 			if (res && !res.ok) { return announce('#general', gelf); }
 			channels[name] = res;
-			announce('#general', `New Channel: ${gelf.host}`)
-			return announce(`#${gelf.host}`, gelf);
+			announce('#general', `New Channel: ${name}`)
+			return announce(`#${name}`, gelf);
 		});
 		return;
 	}
-	announce(`#${gelf.host}`, gelf);
+	announce(`#${name}`, gelf);
 });
 
 server.listen(12201);
 
 const short = (long) => { return long.split('.')[0] }
 
-const joinChannel = (channel, cb) => { slack.api('channels.join', {name: channel}, cb) }
+const joinChannel = (name, cb) => { slack.api('channels.join', { name }, cb) }
 
 const announce = (channel, msg) => { 
 	const send = (text) => {
