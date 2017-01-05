@@ -22,15 +22,15 @@ server.on('message', (gelf) => {
 
 server.listen(12201);
 
-const joinChannel = (channel, cb) => { slack.api('channels.join', { name: channel }, cb) }
+const joinChannel = (channel, cb) => { slack.api('channels.join', {name: channel}, cb) }
 
 const announce = (channel, msg) => { 
 	const send = (text) => {
-		slack.api('chat.postMessage', { text, channel }, (err, res) => { console.log(res); });
+		slack.api('chat.postMessage', { text, channel }, (err, res) => { console.log(res) });
 		console.log(text);
 	}
-	("undefined" != typeof msg, msg.short_message && send(msg.shortmessage))
-	("undefined" != typeof msg, msg.full_message && send(msg.full_message));
+	if (msg && msg.short_message) { send(msg.shortmessage) }
+	if (msg && msg.full_message)  { send(msg.full_message) }
 }
 
 announce(
