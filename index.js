@@ -29,8 +29,8 @@ const announce = (channel, msg) => {
 		slack.api('chat.postMessage', { text, channel }, (err, res) => { console.log(res); });
 		console.log(text);
 	}
-	("undefined" != typeof msg && msg.short_message && true === send(msg.shortmessage))
-	("undefined" != typeof msg && msg.full_message && true === send(msg.full_message));
+	("undefined" != typeof msg, msg.short_message && send(msg.shortmessage))
+	("undefined" != typeof msg, msg.full_message && send(msg.full_message));
 }
 
 announce(
