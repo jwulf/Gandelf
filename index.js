@@ -43,9 +43,9 @@ rtm.on('channel_joined', (evt) => {
 })
 
 const announce = (channel, msg) => { 
-	const send = (text) => { limiter.submit(rtm.sendMessage.bind(rtm.sendMessage),text, channel, 
-		(err, res) => { if (err) { console.log(err) } }); }
-	if (msg && msg.short_message && channel) { send(msg.shortmessage) }
+	const send = (text) => { rtm.sendMessage(text, channel), 
+		(err, res) => { if (err) { console.log(err) } } }
+	if (msg && msg.short_message && channel) { limiter.submit(send, msg.shortmessage) }
 }
 
 server.on('message', (gelf) => {
