@@ -22,10 +22,12 @@ rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED,  (rtmStartData) => {
 		}
   }
   console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}, but not yet connected to a channel`);
+  console.log(`Member of general at ${general}`);
 });
 
 rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, (res) => {
 	init = true;
+	console.log('Connected!');
   	rtm.sendMessage(general, "Hello!",  (err, res) => { console.log(err); });
 });
 
@@ -47,11 +49,12 @@ const announce = (channel, msg) => {
 }
 
 server.on('message', (gelf) => {
-	console.log(gelf)
+	//console.log(gelf)
 	if (!gelf || !gelf.host || !init) return;
 	const name = short(gelf.host);
-	if (channels[name]) { return announce(`#${name}`, gelf) }
-	announce(general, name);
+	if (channels[name]) { return announce(channels[name].id, gelf) }
+	announce(general, {shortmessage: name});
+	announce(general, gelf);
 });
 
 server.listen(12201);
