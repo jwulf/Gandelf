@@ -35,9 +35,9 @@ bot.on('start',  () => {
 				chanlist += `${chan.name} `;
 			}
 		}
+		init = true;
 		announce('general', `Gandelf alive. Currently in these channels: ${chanlist}`);
 	});
-
 });
 
 const announce = (channel, msg) => { 
@@ -57,6 +57,7 @@ const announce = (channel, msg) => {
 const short = (long) => { return long.split('.')[0] }
 
 server.on('message', (gelf) => {
+	console.log(gelf);
 	if (!gelf || !gelf.host || !init || gelf.short_message) { return; }
 
 	const name = short(gelf.host);
