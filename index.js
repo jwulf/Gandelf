@@ -59,7 +59,7 @@ const short = (long) => { return long.split('.')[0] }
 
 server.on('message', (gelf) => {
 	console.log(gelf);
-	if (!gelf || !gelf.host || !init || gelf.short_message) { return; }
+	if (!gelf || !gelf.host || !init || !gelf.short_message) { return; }
 
 	const name = short(gelf.host);
 	if (channels[name]) { return announce(channels[name], gelf.short_message) }
