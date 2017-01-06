@@ -42,6 +42,7 @@ bot.on('start',  () => {
 
 const announce = (channel, msg) => { 
 	const send = (text) => { 
+		console.log(text);
 		return new Promise( (resolve, reject) => {
 			bot.postMessageToChannel(channel, text).always((data) => resolve);
 		});
