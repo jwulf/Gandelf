@@ -18,7 +18,7 @@ rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED,  (rtmStartData) => {
   for (const c of sd.channels) {
 	  if (c.is_member) {
 		  channels[c.name] = c.id;
-		  if (name === 'general') { general = c.id}
+		  if (c.name === 'general') { general = c.id}
 		}
   }
   console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}, but not yet connected to a channel`);
