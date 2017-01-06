@@ -28,11 +28,17 @@ rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED,  (rtmStartData) => {
 rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, (res) => {
 	init = true;
 	console.log('Connected!');
+	console.log(`Logging to ${general}`);
   //	rtm.sendMessage("Hello!", general,  (err, res) => { console.log(err); });
+
 	const announce = (channel, msg) => { 
-		const send = (text) => { rtm.sendMessage(text, channel), 
-			(err, res) => { if (err) { console.log(err) } } }
-		if (msg && msg.short_message && channel) { limiter.submit(send, msg.shortmessage) }
+		const send = (text) => { 
+			console.log(channel);
+			rtm.sendMessage(text, channel), 
+			(err, res) => { if (err) { console.log(err) } 
+			if (res) console.log(res) } 
+		}
+		if (msg && msg.short_message && channel) { limiter.submit(send, msg.short_message) }
 	}
 
 	server.on('message', (gelf) => {
