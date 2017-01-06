@@ -29,6 +29,22 @@ rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, (res) => {
 	init = true;
 	console.log('Connected!');
   //	rtm.sendMessage("Hello!", general,  (err, res) => { console.log(err); });
+	const announce = (channel, msg) => { 
+		const send = (text) => { rtm.sendMessage(text, channel), 
+			(err, res) => { if (err) { console.log(err) } } }
+		if (msg && msg.short_message && channel) { limiter.submit(send, msg.shortmessage) }
+	}
+
+	server.on('message', (gelf) => {
+		console.log(gelf.short_message)
+		if (!gelf || !gelf.host || !init) return;
+		const name = short(gelf.host);
+		if (channels[name]) { return announce(channels[name].id, gelf) }
+		announce(general, {short_message: name});
+		announce(general, gelf);
+	});
+
+
 });
 
 rtm.start();
@@ -43,20 +59,7 @@ rtm.on('channel_joined', (evt) => {
 //	channels[evt.channel.name] = evt.channel.id;
 })
 
-const announce = (channel, msg) => { 
-	const send = (text) => { rtm.sendMessage(text, channel), 
-		(err, res) => { if (err) { console.log(err) } } }
-	if (msg && msg.short_message && channel) { limiter.submit(send, msg.shortmessage) }
-}
 
-server.on('message', (gelf) => {
-	//console.log(gelf)
-	if (!gelf || !gelf.host || !init) return;
-	const name = short(gelf.host);
-	if (channels[name]) { return announce(channels[name].id, gelf) }
-	announce(general, {shortmessage: name});
-	announce(general, gelf);
-});
 
 server.listen(12201);
 
