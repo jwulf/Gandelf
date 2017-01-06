@@ -38,8 +38,9 @@ var channels = {};
 const short = (long) => { return long.split('.')[0] }
 
 rtm.on('channel_joined', (evt) => {
+	console.log('Channel joined');
 	console.log(evt);
-	channels[evt.channel.name] = evt.channel.id;
+//	channels[evt.channel.name] = evt.channel.id;
 })
 
 const announce = (channel, msg) => { 
