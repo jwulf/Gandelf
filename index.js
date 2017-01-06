@@ -1,73 +1,68 @@
 const gelfserver = require('graygelf/server')
 const server = gelfserver();
 var Bottleneck = require("bottleneck"); 
+var Bot = require('slackbots');
 
 var bot_token = process.env.SLACK_API_TOKEN || '';
 
 let init = false;
-let general;
+let general = 'general';
 
-var RtmClient = require('@slack/client').RtmClient;
-var CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
-var rtm = new RtmClient(bot_token);
+var settings = {
+    token: bot_token,
+    name: 'gandelf'
+};
 
-var limiter = new Bottleneck(1, 800);
+var bot = new Bot(settings);
 
-rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED,  (rtmStartData) => {
-  sd = rtmStartData;
-  for (const c of sd.channels) {
-	  if (c.is_member) {
-		  channels[c.name] = c.id;
-		  if (c.name === 'general') { general = c.id}
+var limiter = new Bottleneck(0, 800);
+
+general = 'general'
+var channels = {};
+
+bot.on('channel_joined', (evt) => {
+	console.log('Channel joined');
+	console.log(evt);
+	channels[evt.channel.name] = evt.channel.name;
+})
+
+bot.on('start',  () => {
+	bot.getChannels().always((chans) => {
+		let chanlist = '';
+		for (const chan of chans._value.channels) {
+			if (chan.is_member) {
+				channels[chan.name] = chan.name;
+				chanlist += `${chan.name} `;
+			}
 		}
-  }
-  console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}, but not yet connected to a channel`);
-  console.log(`Member of general at ${general}`);
-});
-
-rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, (res) => {
-	init = true;
-	console.log('Connected!');
-	console.log(`Logging to ${general}`);
-  //	rtm.sendMessage("Hello!", general,  (err, res) => { console.log(err); });
-
-	const announce = (channel, msg) => { 
-		const send = (text) => { 
-			console.log(channel);
-			rtm.sendMessage(text, channel), 
-			(err, res) => { if (err) { console.log(err) } 
-			if (res) console.log(res) } 
-		}
-		if (msg && msg.short_message && channel) { limiter.submit(send, msg.short_message) }
-	}
-
-	server.on('message', (gelf) => {
-		console.log(gelf.short_message)
-		if (!gelf || !gelf.host || !init) return;
-		const name = short(gelf.host);
-		if (channels[name]) { return announce(channels[name].id, gelf) }
-		announce(general, {short_message: name});
-		announce(general, gelf);
+		announce('general', `Gandelf alive. Currently in these channels: ${chanlist}`);
 	});
 
-
 });
 
-rtm.start();
+const announce = (channel, msg) => { 
+	const send = (text) => { 
+		return new Promise( (resolve, reject) => {
+			bot.postMessageToChannel(channel, text).always((data) => resolve);
+		});
+	}
 
-var channels = {};
+	let txt;
+	if (typeof msg === "string") { txt = msg }
+	if (msg && msg.short_message) { txt = msg.short_message }
+
+	limiter.schedule(send, txt).then((data)=> console.log); 
+}
 
 const short = (long) => { return long.split('.')[0] }
 
-rtm.on('channel_joined', (evt) => {
-	console.log('Channel joined');
-	console.log(evt);
-//	channels[evt.channel.name] = evt.channel.id;
-})
+server.on('message', (gelf) => {
+	if (!gelf || !gelf.host || !init || gelf.short_message) { return; }
 
+	const name = short(gelf.host);
+	if (channels[name]) { return announce(channels[name], gelf.short_message) }
+	announce(general, `${name} - ${gelf.short_message}`);
+});
 
 
 server.listen(12201);
-
-
-

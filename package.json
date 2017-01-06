@@ -9,8 +9,8 @@
   "author": "Josh Wulf <josh@magikcraft.io>",
   "license": "ISC",
   "dependencies": {
-    "@slack/client": "^3.8.1",
     "bottleneck": "^1.15.0",
-    "graygelf": "^1.0.2"
+    "graygelf": "^1.0.2",
+    "slackbots": "^1.0.2"
   }
 }
