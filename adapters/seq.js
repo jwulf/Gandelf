@@ -1,5 +1,5 @@
 var structuredLog = require('structured-log');
-var seqSink = require('structured-log-seq-sink');
+var seqSink = require('../lib/structured-log-seq-sink');
 
 var logger = structuredLog.configure()
   .writeTo(seqSink({
