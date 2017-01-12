@@ -5,9 +5,8 @@ var bot_token = process.env.SLACK_API_TOKEN || '';
 var rate_limit = process.env.RATE_LIMIT || 400; // 400 milliseconds between messages
 
 if (bot_token) {
-
     console.log('Enabling Slack logging');
-    
+
     var settings = {
         token: bot_token,
         name: 'gandelf'

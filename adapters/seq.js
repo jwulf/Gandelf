@@ -6,9 +6,7 @@ var seqSink = require('../lib/structured-log-seq-sink');
 const SEQ_URL = process.env.SEQ_URL || null;
 
 if (SEQ_URL) {
-
     console.log('Enabling SEQ logging');
-
     var logger = structuredLog.configure()
     .writeTo(seqSink({
         url: SEQ_URL,
