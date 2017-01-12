@@ -12,7 +12,10 @@ console.log('Seq logging is enabled');
 logger.info('Seq logging is enabled');
 
 function seqMessage(msg) {
-    logger.info('{@msg}',msg);
+    var shortMessage = msg.short_message || '<No message>';
+    var fields = {...msg};
+    delete fields.short_message;
+    logger.enrich(msg).info(shortMessage);
 }
 
 module.exports.seqMessage = seqMessage;
