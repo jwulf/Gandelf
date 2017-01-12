@@ -1,6 +1,6 @@
 var Bottleneck = require("bottleneck");
 var Bot = require('slackbots');
-
+let init = false;
 var bot_token = process.env.SLACK_API_TOKEN || '';
 var rate_limit = process.env.RATE_LIMIT || 400; // 400 milliseconds between messages
 
@@ -54,7 +54,7 @@ const message = (channel, msg) => {
 }
 
 function slackMessage(msg, name) {
-    if (!bot_token) { return; }
+    if (!bot_token || !init) { return; }
 	if (channels[name]) { return message(channels[name], msg) }
 	message(general, `${name} - ${msg}`);
 }

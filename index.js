@@ -2,7 +2,6 @@ const gelfserver = require('graygelf/server');
 const server = gelfserver();
 const slackMessage = require('./adapters/slack').slackMessage;
 const seqMessage = require('./adapters/seq').seqMessage;
-let init = false;
 let general = 'general';
 
 const NAME = process.env.GELF_NAME || null;
