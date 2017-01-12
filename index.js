@@ -5,13 +5,13 @@ const seqMessage = require('./adapters/seq').seqMessage;
 let init = false;
 let general = 'general';
 
+const NAME = process.env.GELF_NAME || null;
+
 const short = (long) => { return long.split('.')[0] }
 
 server.on('message', (gelf) => {
-	console.log(gelf);
 	if (!gelf || !gelf.host || !init || !gelf.short_message) { return; }
-
-	const name = short(gelf.host);
+	const name = NAME || short(gelf.host);
 	slackMessage(gelf.short_message, name);
 	seqMessage(gelf);
 });
