@@ -1,6 +1,6 @@
 # Gandelf
 
-This is a Graylog Extended Log Format to Slack bridge.
+This is a Graylog Extended Log Format to Slack / Seq bridge for docker containers.
 
 Check out [the GELF format here](http://docs.graylog.org/en/2.1/pages/gelf.html).
 
