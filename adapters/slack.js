@@ -13,7 +13,7 @@ if (bot_token) {
     };
 
     var bot = new Bot(settings);
-    var limiter = new Bottleneck(0, 400);
+    var limiter = new Bottleneck(0, process.env.RATE_LIMIT);
     general = 'general'
     var channels = {};
 
