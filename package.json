@@ -9,6 +9,7 @@
   "author": "Josh Wulf <josh@magikcraft.io>",
   "license": "ISC",
   "dependencies": {
+    "azure-storage": "^2.0.0",
     "bottleneck": "^1.15.0",
     "graygelf": "^1.0.2",
     "node-fetch": "^1.6.3",

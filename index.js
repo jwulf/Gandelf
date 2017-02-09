@@ -2,6 +2,7 @@ const gelfserver = require('graygelf/server');
 const server = gelfserver();
 const slackMessage = require('./adapters/slack').slackMessage;
 const seqMessage = require('./adapters/seq').seqMessage;
+const azureMessage = require('./adapters/azure-msg-queue').azureMessage;
 let general = 'general';
 
 const NAME = process.env.GELF_NAME || null;
@@ -13,6 +14,7 @@ server.on('message', (gelf) => {
 	const name = NAME || short(gelf.host);
 	slackMessage(gelf.short_message, name);
 	seqMessage(gelf);
+	azureMessage(gelf.short_message);
 });
 
 server.listen(12201);
