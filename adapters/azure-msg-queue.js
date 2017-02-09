@@ -5,9 +5,10 @@ let init = false;
 if (AzureConnectionString) { init = true; }
 
 const azure = require('azure-storage');
+let queueSvc;
 
 if (init) {
-    const queueSvc = azure.createQueueService();
+    queueSvc = azure.createQueueService();
     console.log(`Creating Queue ${QueueName}`);
     queueSvc.createQueueIfNotExists(QueueName, (error, result, response) => {
         init = !error
