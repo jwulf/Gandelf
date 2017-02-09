@@ -12,7 +12,7 @@ const short = (long) => { return long.split('.')[0] }
 
 server.on('message', (gelf) => {
 	msgCount += 1;
-	console.log(`Message Count: ${mgsCount}`);
+	console.log(`Message Count: ${msgCount}`);
 	if (!gelf || !gelf.host || !gelf.short_message) { return; }
 	const name = NAME || short(gelf.host);
 	slackMessage(gelf.short_message, name);
