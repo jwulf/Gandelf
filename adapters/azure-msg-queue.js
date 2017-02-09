@@ -18,9 +18,13 @@ if (init) {
 
 const azureMessage = (msg) => {
     if (!init) { return; }
-    queueSvc.createMessage(QueueName, msg, (error, result, response) => {
-        if(error) { console.log(error); }
-    });
+    try{
+        queueSvc.createMessage(QueueName, msg, (error, result, response) => {
+            if(error) { console.log(error); }
+        });
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 module.exports.azureMessage = azureMessage;
