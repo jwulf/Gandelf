@@ -15,7 +15,7 @@ if (init) {
     });
 }
 
-function azureMessage(msg) {
+const azureMessage = (msg) => {
     if (!init) { return; }
     queueSvc.createMessage(QueueName, msg, (error, result, response) => {
         if(error) { console.log(error); }
