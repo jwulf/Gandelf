@@ -22,4 +22,4 @@ function azureMessage(msg) {
     });
 }
 
-module.exports.azureMsg = azureMessage;
+module.exports.azureMessage = azureMessage;
