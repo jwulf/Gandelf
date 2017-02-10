@@ -3,6 +3,7 @@ const server = gelfserver();
 const slackMessage = require('./adapters/slack').slackMessage;
 const seqMessage = require('./adapters/seq').seqMessage;
 const azureMessage = require('./adapters/azure-msg-queue').azureMessage;
+const ECHO = process.env.GELF_ECHO;
 let general = 'general';
 let msgCount = 0;
 
@@ -13,6 +14,9 @@ const short = (long) => { return long.split('.')[0] }
 server.on('message', (gelf) => {
 	msgCount += 1;
 	console.log(`Message Count: ${msgCount}`);
+	if (ECHO) {
+		console.log(gelf.short_message);
+	}
 	if (!gelf || !gelf.host || !gelf.short_message) { return; }
 	const name = NAME || short(gelf.host);
 	slackMessage(gelf.short_message, name);
