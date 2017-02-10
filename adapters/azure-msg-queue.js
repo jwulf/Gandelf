@@ -1,5 +1,6 @@
 const AzureConnectionString = process.env.AZURE_STORAGE_CONNECTION_STRING || '';
 const QueueName = process.env.AZURE_STORAGE_QUEUE_NAME || '';
+const AzureFilter = process.env.AZURE_FILTER || '';
 let init = false;
 
 if (AzureConnectionString) { init = true; }
@@ -18,6 +19,7 @@ if (init) {
 
 const azureMessage = (msg) => {
     if (!init) { return; }
+    if (AzureFilter && msg.indexOf(AzureFilter) === -1) { return; }
     try{
         queueSvc.createMessage(QueueName, msg, (error, result, response) => {
             if(error) { console.log(error); }
