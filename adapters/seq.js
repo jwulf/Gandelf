@@ -4,12 +4,14 @@ var seqSink = require('../lib/structured-log-seq-sink');
 'use strict';
 
 const SEQ_URL = process.env.SEQ_URL || null;
+const SEQ_API_KEY = process.env.SEQ_API_KEY || null;
 
 if (SEQ_URL) {
     console.log('Enabling SEQ logging');
     var logger = structuredLog.configure()
     .writeTo(seqSink({
         url: SEQ_URL,
+        apiKey: SEQ_API_KEY,
         compact: true
     }))
     .create();
