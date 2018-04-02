@@ -1,12 +1,18 @@
-const client = require('graygelf')
+const graygelf = require('graygelf')
 const config = require('../configuration')
+const url = config.Gelf.url
 
-function forward(server) {
+function initialise() {
 	const url = config.Gelf.url
 	if (url) {
 		console.log('Enabling GELF Forwarding adapter')
-		server.pipe(client(url))
+		return graygelf(url)
 	}
+	return undefined
 }
 
-module.exports = forward
+const forward = client => server => {
+	if (client) server.pipe(client)
+}
+
+module.exports = forward(initialise())
