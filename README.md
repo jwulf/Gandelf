@@ -19,7 +19,7 @@ See the included `docker-compose.yml` for an example configuration.
 
 If you use it on the same machine as your other containers, and bring it up in the same `docker-compose` configuration, then you need to use `net: host` to get around the fact that the gelf driver needs to see the gelf endpoint before it starts containers. See [this issue](https://github.com/docker/compose/issues/2657) for more details on why that is.
 
-Here's an example of a `docker-compose.yml` file that starts a "production" container, and logs to Slack, local JSON log (accessible via `docker logs gandelf`), and a remote Logstash server via GELF. Note that the gandelf container uses `net: host` and the production container depends on the gandelf container.
+Here's an example of a `docker-compose.yml` file that starts a "production" container, and logs to Slack, local JSON log (accessible via `docker logs gandelf`), and a remote Logstash server via GELF. Note that the gandelf container uses `network_mode: host` and the production container depends on the gandelf container.
 
 ```YAML
 version: '2'
@@ -42,7 +42,7 @@ services:
   restart: always
   image: sitapati/gandelf
   container_name: gandelf
-  net: host
+  network_mode: host
   ports:
    - "12201:12201/udp"
   environment:
