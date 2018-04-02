@@ -15,7 +15,7 @@ To log to SEQ, set the `SEQ_URL` environment variable to point to your Seq insta
 
 You can also use this to forward logs to a remote GELF log server while retaining locally-accessible logs via the gandelf container's jsonlog. See the included `docker-compose.yml` for an example configuration for that.
 
-Here's an example of a docker-compose.yml using it:
+Here's an example of a `docker-compose.yml` file that starts a "production" container, and logs to Slack, local JSON log (accessible via `docker logs gandelf`), and a remote Logstash server via GELF:
 
 ```YAML
 version: '2'
@@ -23,13 +23,15 @@ services:
  play:
   restart: always
   image: my-production-container
-  container_name: play
+  container_name: production
   ports:
    - "80:80"
   logging:
    driver: gelf
    options:
-    gelf-address: "udp://127.0.0.1:12201"
+    gelf-address: "udp://gandelf:12201"
+  depends_on:
+   - "gandelf"
   links:
    - gandelf
  gandelf:
@@ -40,5 +42,6 @@ services:
    - "12201:12201/udp"
   environment:
    - SLACK_API_TOKEN=xoxb-XXXXXXXXXXX-XXXXXXXXXXXXXX
-   - SEQ_URL=http://my-seq.southeastasia.cloudapp.azure.com
+   - GELF_URL=udp://my-remote-logstash.com:12201"
+   - LOCAL_ECHO=true
    ```
