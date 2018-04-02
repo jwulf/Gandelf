@@ -1,32 +1,31 @@
-const AzureConnectionString = process.env.AZURE_STORAGE_CONNECTION_STRING || '';
-const QueueName = process.env.AZURE_STORAGE_QUEUE_NAME || '';
-const AzureFilter = process.env.AZURE_FILTER || '';
-let init = false;
+const config = require('../configuration')
+const azure = require('azure-storage')
 
-if (AzureConnectionString) { init = true; }
-
-const azure = require('azure-storage');
-let queueSvc;
-
-if (init) {
-    queueSvc = azure.createQueueService();
-    console.log(`Creating Queue ${QueueName}`);
-    queueSvc.createQueueIfNotExists(QueueName, (error, result, response) => {
-        init = !error
-        if (error) { console.log(error); }
-    });
+function initialise() {
+    const init = !!config.AzureConnectionString
+    const queueSvc = init
+        ? azure.createQueueService()
+        : undefined
+    if (init) {
+        console.log(`Creating Queue ${QueueName}`)
+        queueSvc.createQueueIfNotExists(QueueName, (error, result, response) => {
+            init = !error
+            if (error) { console.log(error) }
+        });
+    }
+    return ({init, queueSvc})
 }
 
-const azureMessage = (msg) => {
-    if (!init) { return; }
-    if (AzureFilter && msg.indexOf(AzureFilter) === -1) { return; }
+const azureMessage = ({init, queueSvc}) => msg => {
+    if (!init) { return }
+    if (AzureFilter && msg.indexOf(AzureFilter) === -1) { return }
     try{
         queueSvc.createMessage(QueueName, msg, (error, result, response) => {
-            if(error) { console.log(error); }
+            if(error) { console.log(error) }
         });
     } catch (e) {
-        console.log(e);
+        console.log(e)
     }
 }
 
-module.exports.azureMessage = azureMessage;
+module.exports.azureMessage = azureMessage(initialise());

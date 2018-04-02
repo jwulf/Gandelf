@@ -1,31 +1,32 @@
-var structuredLog = require('structured-log');
-var seqSink = require('../lib/structured-log-seq-sink');
+const structuredLog = require('structured-log');
+const seqSink = require('../lib/structured-log-seq-sink');
+const config = require('../configuration')
 
 'use strict';
 
-const SEQ_URL = process.env.SEQ_URL || null;
-const SEQ_API_KEY = process.env.SEQ_API_KEY || null;
-
-if (SEQ_URL) {
-    console.log('Enabling SEQ logging');
-    var logger = structuredLog.configure()
-    .writeTo(seqSink({
-        url: SEQ_URL,
-        apiKey: SEQ_API_KEY,
-        compact: true
-    }))
-    .create();
-
-    console.log('Seq logging is enabled');
-    seqMessage({short_message: 'Seq logging is enabled', a: 1});
+function initialise() {
+    const logger = config.SEQ_URL
+        ? logger = structuredLog.configure()
+            .writeTo(seqSink({
+                url: SEQ_URL,
+                apiKey: SEQ_API_KEY,
+                compact: true
+            }))
+            .create()
+        : undefined
+        if (logger) {
+            console.log('Seq logging is enabled')
+            seqMessage({short_message: 'Seq logging is enabled', a: 1})
+        }
+    return ({ init: !!logger, logger })
 }
 
-function seqMessage(msg) {
-    if (!SEQ_URL) { return; }
-    var shortMessage = msg.short_message || '<No message>';
-    var fields = Object.assign({}, msg);
-    delete fields.short_message;
-    logger.enrich(fields).info(shortMessage);
+const seqMessage = ({init, logger}) => msg => {
+    if (!init) { return }
+    var shortMessage = msg.short_message || '<No message>'
+    var fields = Object.assign({}, msg)
+    delete fields.short_message
+    logger.enrich(fields).info(shortMessage)
 }
 
-module.exports.seqMessage = seqMessage;
+module.exports.seqMessage = seqMessage(initialise())

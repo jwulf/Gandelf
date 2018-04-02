@@ -1,0 +1,14 @@
+# An example that forwards log messages to a remote GELF server, while logging them
+# locally via the gandelf container's jsonlog driver
+# Point your other containers to localhost:12201 with their GELF log driver
+version: '2'
+services:
+ gandelf:
+  restart: always
+  image: sitapati/gandelf
+  container_name: gandelf
+  ports:
+   - "12201:12201/udp"
+  environment:
+   - GELF_URL=udp://my-gelf-log-server.com:12201
+   - ECHO_LOCAL=true
