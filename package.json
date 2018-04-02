@@ -6,6 +6,10 @@
   "scripts": {
     "test": "I only test in production."
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jwulf/Gandelf"
+  },
   "author": "Josh Wulf <josh@magikcraft.io>",
   "license": "ISC",
   "dependencies": {
