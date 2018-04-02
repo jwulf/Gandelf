@@ -1,6 +1,6 @@
 # Gandelf
 
-This is a Graylog Extended Log Format to Slack / Seq bridge for docker containers.
+This is a Graylog Extended Log Format bridge for docker containers. It allows you to log to Seq, Slack, Azure Message queues, and also to log locally via jsonlog while sending your container logs to Logstash or another remote log server.
 
 Check out [the GELF format here](http://docs.graylog.org/en/2.1/pages/gelf.html).
 
