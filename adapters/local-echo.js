@@ -14,9 +14,10 @@ const initialise = ({containers, init}) => ({containers, init: !!config.Local.ec
 
 const echo = ({containers, init}) => gelf => {
 	if (!init) { return }
-	const name = gelf._container_name
-	containers[name] = containers[name] || { color: colors[(size(containers) % colors.length) - 1] }
-	console.log(containers[name].color(`${name} - ${gelf.short_message}`))
+	const name = gelf._container_name || 'default'
+	containers[name] = containers[name] || colors[(size(containers) % colors.length) - 1]
+	const colorised = containers[name] || chalk.white
+	console.log(colorised(`${name} - ${gelf.short_message}`))
 }
 
 module.exports = echo(initialise({containers: {}, init: false}))
