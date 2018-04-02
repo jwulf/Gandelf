@@ -10,5 +10,5 @@ services:
   ports:
    - "12201:12201/udp"
   environment:
-   - GELF_URL=udp://my-gelf-log-server.com:12201
+   - GELF_URL=my-gelf-log-server.com
    - ECHO_LOCAL=true

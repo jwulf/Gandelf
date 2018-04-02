@@ -47,6 +47,6 @@ services:
    - "12201:12201/udp"
   environment:
    - SLACK_API_TOKEN=xoxb-XXXXXXXXXXX-XXXXXXXXXXXXXX
-   - GELF_URL=udp://my-remote-logstash.com:12201"
+   - GELF_URL=my-remote-logstash.com
    - LOCAL_ECHO=true
    ```
