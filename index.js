@@ -7,18 +7,13 @@ const azureMessage = require('./adapters/azure-msg-queue').azureMessage
 const gelfForward = require('./adapters/gelf-forward').forward
 const config = require('./configuration')
 
-let general = 'general'
-let msgCount = 0
-
 const NAME = process.env.GELF_NAME || null
 
 const short = (long) => { return long.split('.')[0] }
 
-server.on('message', (gelf) => {
-	msgCount += 1;
-	console.log(`Message Count: ${msgCount}`);
+server.on('message', gelf => {
 	if (config.Local.echo) {
-		console.log(gelf.short_message);
+		console.log(gelf)
 	}
 	if (!gelf || !gelf.host || !gelf.short_message) { return }
 	const name = NAME || short(gelf.host)
