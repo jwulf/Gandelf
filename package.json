@@ -13,10 +13,9 @@
   "author": "Josh Wulf <josh@magikcraft.io>",
   "license": "ISC",
   "dependencies": {
-    "@types/lodash.foreach": "^4.5.3",
-    "@types/lodash.size": "^4.2.3",
     "azure-storage": "^2.0.0",
     "bottleneck": "^1.15.0",
+    "chalk": "^2.3.2",
     "graygelf": "^1.0.2",
     "lodash.foreach": "^4.5.0",
     "lodash.size": "^4.2.0",
