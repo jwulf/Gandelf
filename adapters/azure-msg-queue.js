@@ -29,4 +29,4 @@ const azureMessage = ({init, queueSvc}) => ({short_message = ''} = {}) => {
     }
 }
 
-module.exports.message = azureMessage(initialise());
+module.exports = azureMessage(initialise());

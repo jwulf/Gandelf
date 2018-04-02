@@ -29,4 +29,4 @@ const seqMessage = ({init, logger}) => gelf => {
     logger.enrich(fields).info(shortMessage)
 }
 
-module.exports.message = seqMessage(initialise())
+module.exports = seqMessage(initialise())

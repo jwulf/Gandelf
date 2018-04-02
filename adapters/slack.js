@@ -64,4 +64,4 @@ const slackMessage = ({bot, limiter, init, channels}) => gelf => {
 	return message({channel, msg: `${name} - ${msg}`})
 }
 
-module.exports.message = slackMessage(initialise());
+module.exports = slackMessage(initialise());

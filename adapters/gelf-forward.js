@@ -9,4 +9,4 @@ function forward(server) {
 	}
 }
 
-module.exports = { forward }
+module.exports = forward

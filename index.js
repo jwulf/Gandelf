@@ -1,27 +1,20 @@
-const gelfserver = require('graygelf/server')
+const forEach = require('lodash.foreach')
+const server = require('graygelf/server')()
+const gelfForward = require('./adapters/gelf-forward')(server)
 
-const slackMessage = require('./adapters/slack').message
-const seqMessage = require('./adapters/seq').message
-const azureMessage = require('./adapters/azure-msg-queue').message
-const gelfForward = require('./adapters/gelf-forward').forward
-const config = require('./configuration')
+const slack = require('./adapters/slack')
+const seq = require('./adapters/seq')
+const azure = require('./adapters/azure-msg-queue')
+const local = require('./adapters/local-echo')
 
+const adapters = [
+	azure,
+	local,
+	seq,
+	slack
+]
 
-const server = gelfserver()
-if (config.Gelf.url) {
-	gelfForward(server)
-}
-
-server.on('message', gelf => {
-	if (config.Local.echo) {
-		console.log(gelf) // jsonlog
-	}
-	if (!gelf || !gelf.host || !gelf.short_message) { return }
-
-	slackMessage(gelf)
-	seqMessage(gelf)
-	azureMessage(gelf)
-});
+server.on('message', gelf => forEach(adapters, adapter => adapter(gelf)))
 
 server.listen(12201)
 console.log('Server listening on Port 12201')
