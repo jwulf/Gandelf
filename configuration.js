@@ -9,7 +9,7 @@ const SEQ_API_KEY = process.env.SEQ_API_KEY
 const bot_token = process.env.SLACK_API_TOKEN
 const rate_limit = process.env.RATE_LIMIT || 400 // 400 milliseconds between messages
 // Gelf forwarding settings
-const url = process.env.GELF_URL
+const GELF_URL = process.env.GELF_URL
 // Local jsonlog echo
 const ECHO_LOCAL =  process.env.ECHO_LOCAL === 'true'
 
