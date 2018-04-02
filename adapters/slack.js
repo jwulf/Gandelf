@@ -19,7 +19,7 @@ function initialise() {
     const limiter = new Bottleneck(0, config.Slack.rate_limit) // 400 ms default
 
     if (config.bot_token) {
-        console.log('Enabling Slack logging')
+        console.log('Enabling Slack logging adapter')
 
 
         bot.on('channel_joined', (evt) => {
@@ -46,26 +46,22 @@ function initialise() {
 }
 
 
+const short = long => long.split('.')[0]
+const getMessage = msg => (typeof msg === "string") ? msg : (msg && msg.short_message) ? msg.short_message : undefined
 
-const slackMessage = ({bot, limiter, init, channels}) => (msg, name) => {
+const slackMessage = ({bot, limiter, init, channels}) => gelf => {
+    if (!init.ready) { return }
 
-    const message = (channel, msg) => {
-        const send = text => {
-            return new Promise((resolve, reject) => bot.postMessageToChannel(channel, text).always((data) => resolve))
-        }
-
-        const txt = (typeof msg === "string")
-            ? msg
-            : (msg && msg.short_message)
-                ? msg.short_message
-                : undefined
-
-        limiter.schedule(send, txt).then((data)=> console.log)
+    const message = ({channel, msg}) => {
+        const send = async text => await bot.postMessageToChannel(channel, text)
+        const txt = getMessage(msg)
+        limiter.schedule(send, txt)
     }
 
-    if (!bot_token || !init.ready) { return }
-	if (channels[name]) { return message(channels[name], msg) }
-	message(general, `${name} - ${msg}`)
+    const msg = getMessage(gelf)
+    const name = short(gelf.host)
+	const channel = channels[name] ? channels[name] : 'general'
+	return message({channel, msg: `${name} - ${msg}`})
 }
 
-module.exports.slackMessage = slackMessage(initialise());
+module.exports.message = slackMessage(initialise());

@@ -7,6 +7,7 @@ function initialise() {
         ? azure.createQueueService()
         : undefined
     if (init) {
+        console.log('Enabling Azure Message Queue adapter')
         console.log(`Creating Queue ${QueueName}`)
         queueSvc.createQueueIfNotExists(QueueName, (error, result, response) => {
             init = !error
@@ -16,11 +17,11 @@ function initialise() {
     return ({init, queueSvc})
 }
 
-const azureMessage = ({init, queueSvc}) => msg => {
+const azureMessage = ({init, queueSvc}) => ({short_message = ''} = {}) => {
     if (!init) { return }
-    if (AzureFilter && msg.indexOf(AzureFilter) === -1) { return }
+    if (AzureFilter && gelf.indexOf(AzureFilter) === -1) { return }
     try{
-        queueSvc.createMessage(QueueName, msg, (error, result, response) => {
+        queueSvc.createMessage(QueueName, gelf, (error, result, response) => {
             if(error) { console.log(error) }
         });
     } catch (e) {
@@ -28,4 +29,4 @@ const azureMessage = ({init, queueSvc}) => msg => {
     }
 }
 
-module.exports.azureMessage = azureMessage(initialise());
+module.exports.message = azureMessage(initialise());

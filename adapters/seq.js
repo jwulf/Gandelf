@@ -15,18 +15,18 @@ function initialise() {
             .create()
         : undefined
         if (logger) {
-            console.log('Seq logging is enabled')
+            console.log('Enabling Seq logging adapter')
             seqMessage({short_message: 'Seq logging is enabled', a: 1})
         }
     return ({ init: !!logger, logger })
 }
 
-const seqMessage = ({init, logger}) => msg => {
+const seqMessage = ({init, logger}) => gelf => {
     if (!init) { return }
-    var shortMessage = msg.short_message || '<No message>'
-    var fields = Object.assign({}, msg)
+    var shortMessage = gelf.short_message || '<No message>'
+    var fields = Object.assign({}, gelf)
     delete fields.short_message
     logger.enrich(fields).info(shortMessage)
 }
 
-module.exports.seqMessage = seqMessage(initialise())
+module.exports.message = seqMessage(initialise())
