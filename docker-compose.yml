@@ -9,6 +9,10 @@ services:
   container_name: gandelf
   ports:
    - "12201:12201/udp"
+  log_driver: "json-file"
+  log_opt:
+    max-size: "100k"
+    max-file: "20"
   environment:
    - GELF_URL=my-gelf-log-server.com
    - ECHO_LOCAL=true

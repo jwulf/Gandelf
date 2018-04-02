@@ -8,4 +8,4 @@ RUN apk add --no-cache make gcc g++ python && \
   apk del make gcc g++ python
 
 EXPOSE 12201/udp
-CMD ["node", "index.js"]
+CMD ["node", "index.js", "--color"]
