@@ -43,10 +43,15 @@ services:
   image: sitapati/gandelf
   container_name: gandelf
   network_mode: host
+  logging:
+   driver: "json-file"
+   options:
+    max-size: "100k"
+    max-file: "20"
   ports:
    - "12201:12201/udp"
   environment:
    - SLACK_API_TOKEN=xoxb-XXXXXXXXXXX-XXXXXXXXXXXXXX
    - GELF_URL=my-remote-logstash.com
    - LOCAL_ECHO=true
-   ```
+```

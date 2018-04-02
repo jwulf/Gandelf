@@ -9,8 +9,9 @@ services:
   container_name: gandelf
   ports:
    - "12201:12201/udp"
-  log_driver: "json-file"
-  log_opt:
+  logging:
+   driver: "json-file"
+   options:
     max-size: "100k"
     max-file: "20"
   environment:

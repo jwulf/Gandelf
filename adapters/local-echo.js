@@ -3,10 +3,10 @@ const chalk = require('chalk')
 const size = require('lodash.size')
 
 const colors = [
-	chalk.green,
-	chalk.yellow,
-	chalk.blue,
 	chalk.cyan,
+	chalk.yellow,
+	chalk.cyan,
+	chalk.blue,
 	chalk.magenta
 ]
 
@@ -17,7 +17,7 @@ const echo = ({containers, init}) => gelf => {
 	const name = gelf._container_name || 'default'
 	containers[name] = containers[name] || colors[(size(containers) % colors.length)]
 	const colorised = containers[name] || chalk.white
-	console.log(colorised(`${name} - ${gelf.short_message}`))
+	console.log(colorised(`[${name}] - ${gelf.short_message}`))
 }
 
 module.exports = echo(initialise({containers: {}, init: false}))
