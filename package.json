@@ -21,6 +21,7 @@
     "bottleneck": "^1.15.0",
     "chalk": "^2.3.2",
     "graygelf": "^1.0.2",
+    "healthchecks.io": "^1.1.4",
     "lodash.foreach": "^4.5.0",
     "lodash.size": "^4.2.0",
     "node-fetch": "^1.6.3",

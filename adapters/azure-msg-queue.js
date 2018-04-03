@@ -7,15 +7,16 @@ function initialise() {
     const queueSvc = init
         ? azure.createQueueService()
         : undefined
+    const AzureMessageQueue = chalk.yellow('Azure Message Queue Logging: ')
     if (init) {
-        console.log(chalk.bold(chalk.yellow('Azure Message Queue Logging: ') + chalk.green('Enabled')))
+        console.log(chalk.bold(AzureMessageQueue + chalk.green('Enabled')))
         console.log(`Creating Queue ${QueueName}`)
         queueSvc.createQueueIfNotExists(QueueName, (error, result, response) => {
             init = !error
             if (error) { console.log(error) }
         })
     } else {
-        console.log(chalk.bold(chalk.yellow('Azure Message Queue Logging: ') + chalk.red('Disabled')))
+        console.log(chalk.bold(AzureMessageQueue + chalk.red('Disabled')))
     }
     return ({init, queueSvc})
 }

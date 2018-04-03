@@ -9,6 +9,7 @@ const slack = require('./adapters/slack')
 const seq = require('./adapters/seq')
 const azure = require('./adapters/azure-msg-queue')
 const local = require('./adapters/local-echo')
+const healthcheck = require('./adapters/healthchecks.io')
 
 const uncaught = require('uncaught')
 

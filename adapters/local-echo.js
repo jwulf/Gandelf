@@ -20,10 +20,11 @@ const echo = ({containers, init}) => gelf => {
 	console.log(colorised(`[${name}] - ${gelf.short_message}`))
 }
 
+const LocalJSONLogging = chalk.yellow('Local JSON Logging: ')
 if (!config.Local.echo) {
-	console.log(chalk.bold(chalk.yellow('Local JSON Logging: ') + chalk.red('Disabled')))
+	console.log(chalk.bold(LocalJSONLogging + chalk.red('Disabled')))
 } else {
-	console.log(chalk.bold(chalk.yellow('Local JSON Logging: ') + chalk.green('Enabled')))
+	console.log(chalk.bold(LocalJSONLogging + chalk.green('Enabled')))
 }
 
 module.exports = echo(initialise({containers: {}, init: false}))

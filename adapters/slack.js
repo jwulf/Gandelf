@@ -19,8 +19,9 @@ function initialise() {
 
     const limiter = new Bottleneck(0, config.Slack.rate_limit) // 400 ms default
 
+    const SlackLogging = chalk.yellow('Slack Logging: ')
     if (config.bot_token) {
-        console.log(chalk.bold(chalk.yellow('Slack Logging: ') + chalk.green('Enabled')))
+        console.log(chalk.bold(SlackLogging + chalk.green('Enabled')))
 
         bot.on('channel_joined', (evt) => {
             console.log('Slack channel joined')
@@ -42,7 +43,7 @@ function initialise() {
             })
         })
     } else {
-        console.log(chalk.bold(chalk.yellow('Slack Logging: ') + chalk.red('Disabled')))
+        console.log(chalk.bold(SlackLogging + chalk.red('Disabled')))
     }
     return ({ init, bot, limiter, channels})
 }

@@ -11,8 +11,10 @@ const rate_limit = process.env.RATE_LIMIT || 400 // 400 milliseconds between mes
 // Gelf forwarding settings
 const GELF_URL = process.env.GELF_URL
 // Local jsonlog echo
-const ECHO_LOCAL =  process.env.ECHO_LOCAL === 'true'
-
+const ECHO_LOCAL = process.env.ECHO_LOCAL === 'true'
+// Healthchecks.io
+const HEALTHCHECKS_IO_URL = process.env.HEALTHCHECKS_IO_URL || undefined
+const HEALTHCHECKS_IO_HEARTBEAT_MINS = process.env.HEALTHCHECKS_IO_HEARTBEAT_MINS || 5
 module.exports = {
 	Azure: {
 		AzureConnectionString,
@@ -32,5 +34,9 @@ module.exports = {
 	},
 	Local: {
 		echo: ECHO_LOCAL
+	},
+	Healthchecksio: {
+		url: HEALTHCHECKS_IO_URL,
+		heartbeat: HEALTHCHECKS_IO_HEARTBEAT_MINS
 	}
 }

@@ -13,11 +13,12 @@ function initialise() {
             }))
             .create()
         : undefined
+        const SeqLogging = chalk.yellow('Seq Logging: ')
         if (logger) {
-            console.log(chalk.bold(chalk.yellow('Seq Logging: ') + chalk.green('Enabled')))
+            console.log(chalk.bold(SeqLogging + chalk.green('Enabled')))
             seqMessage({short_message: 'Seq logging is enabled', a: 1})
         } else {
-            console.log(chalk.bold(chalk.yellow('Seq Logging: ') + chalk.red('Disabled')))
+            console.log(chalk.bold(SeqLogging + chalk.red('Disabled')))
 
         }
     return ({ init: !!logger, logger })

@@ -6,11 +6,12 @@ const url = config.Gelf.url
 
 function initialise() {
 	const url = config.Gelf.url
+	const GelfForwarding = chalk.yellow('Gelf forwarding: ')
 	if (url) {
-		console.log(chalk.bold(chalk.yellow('Gelf forwarding: ') + chalk.green('Enabled')))
+		console.log(chalk.bold(GelfForwarding + chalk.green('Enabled')))
 		return graygelf(url)
 	}
-	console.log(chalk.bold(chalk.yellow('Gelf forwarding: ') + chalk.red('Disabled')))
+	console.log(chalk.bold(GelfForwarding + chalk.red('Disabled')))
 	return undefined
 }
 
