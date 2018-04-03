@@ -4,7 +4,8 @@
   "description": "Gelf to Slack bridge for Docker containers",
   "main": "index.js",
   "scripts": {
-    "test": "I only test in production."
+    "test": "I only test in production.",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -13,6 +14,9 @@
   "author": "Josh Wulf <josh@magikcraft.io>",
   "license": "ISC",
   "dependencies": {
+    "@types/chalk": "^2.2.0",
+    "@types/lodash.foreach": "^4.5.3",
+    "@types/lodash.size": "^4.2.3",
     "azure-storage": "^2.0.0",
     "bottleneck": "^1.15.0",
     "chalk": "^2.3.2",
@@ -21,6 +25,7 @@
     "lodash.size": "^4.2.0",
     "node-fetch": "^1.6.3",
     "slackbots": "^1.0.2",
-    "structured-log": "0.0.18"
+    "structured-log": "0.0.18",
+    "uncaught": "0.0.5"
   }
 }

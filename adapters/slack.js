@@ -1,6 +1,7 @@
 const Bottleneck = require("bottleneck")
 const Bot = require('slackbots')
 const config = require('../configuration')
+const chalk = require('chalk')
 
 function initialise() {
     const init = { ready: false }
@@ -19,8 +20,7 @@ function initialise() {
     const limiter = new Bottleneck(0, config.Slack.rate_limit) // 400 ms default
 
     if (config.bot_token) {
-        console.log('Enabling Slack logging adapter')
-
+        console.log(chalk.bold(chalk.yellow('Slack Logging: ') + chalk.green('Enabled')))
 
         bot.on('channel_joined', (evt) => {
             console.log('Slack channel joined')
@@ -41,6 +41,8 @@ function initialise() {
                 message('general', `Gandelf alive. Currently in these channels: ${chanlist}`)
             })
         })
+    } else {
+        console.log(chalk.bold(chalk.yellow('Slack Logging: ') + chalk.red('Disabled')))
     }
     return ({ init, bot, limiter, channels})
 }

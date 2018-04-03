@@ -1,8 +1,7 @@
 const structuredLog = require('structured-log');
 const seqSink = require('../lib/structured-log-seq-sink');
 const config = require('../configuration')
-
-'use strict';
+const chalk = require('chalk')
 
 function initialise() {
     const logger = config.SEQ_URL
@@ -15,8 +14,11 @@ function initialise() {
             .create()
         : undefined
         if (logger) {
-            console.log('Enabling Seq logging adapter')
+            console.log(chalk.bold(chalk.yellow('Seq Logging: ') + chalk.green('Enabled')))
             seqMessage({short_message: 'Seq logging is enabled', a: 1})
+        } else {
+            console.log(chalk.bold(chalk.yellow('Seq Logging: ') + chalk.red('Disabled')))
+
         }
     return ({ init: !!logger, logger })
 }

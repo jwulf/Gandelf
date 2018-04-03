@@ -1,5 +1,6 @@
 const config = require('../configuration')
 const azure = require('azure-storage')
+const chalk = require('chalk')
 
 function initialise() {
     const init = !!config.AzureConnectionString
@@ -7,12 +8,14 @@ function initialise() {
         ? azure.createQueueService()
         : undefined
     if (init) {
-        console.log('Enabling Azure Message Queue adapter')
+        console.log(chalk.bold(chalk.yellow('Azure Message Queue Logging: ') + chalk.green('Enabled')))
         console.log(`Creating Queue ${QueueName}`)
         queueSvc.createQueueIfNotExists(QueueName, (error, result, response) => {
             init = !error
             if (error) { console.log(error) }
-        });
+        })
+    } else {
+        console.log(chalk.bold(chalk.yellow('Azure Message Queue Logging: ') + chalk.red('Disabled')))
     }
     return ({init, queueSvc})
 }
