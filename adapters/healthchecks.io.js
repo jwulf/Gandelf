@@ -2,8 +2,8 @@ const config = require('../configuration')
 const chalk = require('chalk')
 const healthcheck = require('healthchecks.io');
 
-const url = config.Healthchecksio.url
-const heartbeat = config.Healthchecksio.heartbeat
+const { Healthchecksio } = config
+const { heartbeat, url } = Healthchecksio || {}
 
 const Heartbeat = chalk.yellow('Healthchecks.io heartbeat: ')
 if (url) {

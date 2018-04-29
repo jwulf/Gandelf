@@ -2,6 +2,9 @@ const config = require('../configuration')
 const chalk = require('chalk')
 const size = require('lodash.size')
 
+const { Local } = config || {}
+const { echo } = Local || {}
+
 const colors = [
 	chalk.cyan,
 	chalk.yellow,
@@ -10,7 +13,7 @@ const colors = [
 	chalk.magenta
 ]
 
-const initialise = ({containers, init}) => ({containers, init: !!config.Local.echo})
+const initialise = ({containers, init}) => ({containers, init: !!echo})
 
 const echo = ({containers, init}) => gelf => {
 	if (!init) { return }
@@ -21,7 +24,7 @@ const echo = ({containers, init}) => gelf => {
 }
 
 const LocalJSONLogging = chalk.yellow('Local JSON Logging: ')
-if (!config.Local.echo) {
+if (!echo) {
 	console.log(chalk.bold(LocalJSONLogging + chalk.red('Disabled')))
 } else {
 	console.log(chalk.bold(LocalJSONLogging + chalk.green('Enabled')))

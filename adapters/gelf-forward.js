@@ -2,10 +2,10 @@ const graygelf = require('graygelf')
 const config = require('../configuration')
 const chalk = require('chalk')
 
-const url = config.Gelf.url
+const { Gelf } = config || {}
+const { url } = Gelf || {}
 
 function initialise() {
-	const url = config.Gelf.url
 	const GelfForwarding = chalk.yellow('Gelf forwarding: ')
 	if (url) {
 		console.log(chalk.bold(GelfForwarding + chalk.green('Enabled')))

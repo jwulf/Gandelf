@@ -3,12 +3,15 @@ const seqSink = require('../lib/structured-log-seq-sink');
 const config = require('../configuration')
 const chalk = require('chalk')
 
+const { Seq } = config || {}
+const { SEQ_URL, SEQ_API_KEY } = Seq || {}
+
 function initialise() {
-    const logger = config.Seq.SEQ_URL
+    const logger = SEQ_URL
         ? structuredLog.configure()
             .writeTo(seqSink({
-                url: config.Seq.SEQ_URL,
-                apiKey: config.Seq.SEQ_API_KEY,
+                url: SEQ_URL,
+                apiKey: SEQ_API_KEY,
                 compact: true
             }))
             .create()

@@ -3,10 +3,12 @@ const Bot = require('slackbots')
 const config = require('../configuration')
 const chalk = require('chalk')
 
+const { Slack } = config
+const { bot_token, rate_limit } = Slack || {}
+
 function initialise() {
     const init = { ready: false }
     const channels = {}
-    const bot_token = config.Slack.bot_token
 
     const settings = {
         token: bot_token,
@@ -17,10 +19,10 @@ function initialise() {
         ? new Bot(settings)
         : undefined
 
-    const limiter = new Bottleneck(0, config.Slack.rate_limit) // 400 ms default
+    const limiter = new Bottleneck(0, rate_limit) // 400 ms default
 
     const SlackLogging = chalk.yellow('Slack Logging: ')
-    if (config.bot_token) {
+    if (bot_token) {
         console.log(chalk.bold(SlackLogging + chalk.green('Enabled')))
 
         bot.on('channel_joined', (evt) => {
