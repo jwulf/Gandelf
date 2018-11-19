@@ -15,7 +15,7 @@ const colors = [
 
 const initialise = ({containers, init}) => ({containers, init: !!echo})
 
-const echo = ({containers, init}) => gelf => {
+const echoFn = ({containers, init}) => gelf => {
 	if (!init) { return }
 	const name = gelf._container_name || 'default'
 	containers[name] = containers[name] || colors[(size(containers) % colors.length)]
@@ -30,4 +30,4 @@ if (!echo) {
 	console.log(chalk.bold(LocalJSONLogging + chalk.green('Enabled')))
 }
 
-module.exports = echo(initialise({containers: {}, init: false}))
+module.exports = echoFn(initialise({containers: {}, init: false}))
