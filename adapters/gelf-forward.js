@@ -7,9 +7,13 @@ const { url } = Gelf || {}
 
 function initialise() {
 	const GelfForwarding = chalk.yellow('Gelf forwarding: ')
-	if (url) {
-		console.log(chalk.bold(GelfForwarding + chalk.green('Enabled')))
-		return graygelf(url)
+	try {
+		if (url) {
+			console.log(chalk.bold(GelfForwarding + chalk.green('Enabled')))
+			return graygelf(url)
+		}
+	} catch(e) {
+		console.log(e)
 	}
 	console.log(chalk.bold(GelfForwarding + chalk.red('Disabled')))
 	return undefined

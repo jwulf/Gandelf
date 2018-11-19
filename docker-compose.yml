@@ -15,5 +15,21 @@ services:
     max-size: "100k"
     max-file: "20"
   environment:
-   - GELF_URL=my-gelf-log-server.com
+#   - GELF_URL=my-gelf-log-server.com
    - ECHO_LOCAL=true
+ web:
+  restart: always
+  image: pierrezemb/gostatic
+  container_name: web
+  ports:
+   - "8080:8043"
+  volumes:
+    - ./:/srv/http
+  logging:
+   driver: gelf
+   options:
+    gelf-address: "udp://localhost:12201"
+  depends_on:
+   - "gandelf"
+  links:
+   - gandelf
