@@ -4,7 +4,7 @@ const config = require('../configuration')
 const chalk = require('chalk')
 
 const { Seq } = config || {}
-const { SEQ_URL, SEQ_API_KEY } = Seq || {}
+const { SEQ_URL, SEQ_API_KEY, SEQ_COMPACT } = Seq || {}
 
 function initialise() {
     const logger = SEQ_URL
@@ -12,7 +12,7 @@ function initialise() {
             .writeTo(seqSink({
                 url: SEQ_URL,
                 apiKey: SEQ_API_KEY,
-                compact: true
+                compact: SEQ_COMPACT
             }))
             .create()
         : undefined;

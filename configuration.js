@@ -5,6 +5,7 @@ const AzureFilter = process.env.AZURE_FILTER
 // Seq Settings
 const SEQ_URL = process.env.SEQ_URL
 const SEQ_API_KEY = process.env.SEQ_API_KEY
+const SEQ_COMPACT = process.env.SEQ_COMPACT === 'true'
 // Slack Settings
 const bot_token = process.env.SLACK_API_TOKEN
 const rate_limit = process.env.RATE_LIMIT || 400 // 400 milliseconds between messages
@@ -23,7 +24,8 @@ module.exports = {
 	},
 	Seq: {
 		SEQ_URL,
-		SEQ_API_KEY
+        SEQ_API_KEY,
+        SEQ_COMPACT
 	},
 	Slack: {
 		bot_token,
