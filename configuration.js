@@ -23,8 +23,7 @@ module.exports = {
 	},
 	Seq: {
 		SEQ_URL,
-        SEQ_API_KEY,
-        SEQ_COMPACT
+        SEQ_API_KEY
 	},
 	Slack: {
 		bot_token,
