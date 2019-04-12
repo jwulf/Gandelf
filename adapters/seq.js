@@ -1,5 +1,5 @@
-const structuredLog = require('structured-log');
-const seqSink = require('../lib/structured-log-seq-sink');
+const structuredLog = require('structured-log')
+const seqSink = require('../lib/structured-log-seq-sink')
 const config = require('../configuration')
 const chalk = require('chalk')
 
@@ -29,11 +29,28 @@ function initialise() {
     return ({ init: !!logger, logger })
 }
 
+function parseJson(str) {
+    try {
+        return JSON.parse(str)
+    } catch (e) {
+        return str
+    }
+}
+
 const seqMessage = ({init, logger}) => gelf => {
     if (!init) { return }
     var shortMessage = gelf.short_message || '<No message>'
     var fields = Object.assign({}, gelf)
+    var parsed = parseJson(shortMessage)
+    if(typeof parsed === 'object') {
+      Object.assign(fields, parsed)
+      if(parsed['@mt']) shortMessage = parsed['@mt']
+    }
+    
     delete fields.short_message
+    delete fields.host
+    delete fields.version
+    delete fields.timestamp
     logger.enrich(fields).info(shortMessage)
 }
 

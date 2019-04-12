@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:8.5.0
+FROM mhart/alpine-node:8.15.1
 
 WORKDIR /shire
 ADD . .
