@@ -28,7 +28,6 @@
     "uncaught": "0.0.5"
   },
   "devDependencies": {
-    "@types/chalk": "^2.2.0",
     "@types/node": "^12.12.21",
     "typescript": "^3.7.4"
   }

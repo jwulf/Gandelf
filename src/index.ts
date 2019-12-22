@@ -27,8 +27,6 @@ uncaught.addListener(error =>
 const adapters = [azure, local, seq, slack];
 
 gelfServer.on("message", gelfMessage => {
-  // tslint:disable-next-line: no-console
-  console.log("message", gelfMessage); // @DEBUG
   adapters.forEach(adapter => adapter(gelfMessage));
 });
 
