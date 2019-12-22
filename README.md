@@ -1,6 +1,6 @@
 # Gandelf
 
-This is a Graylog Extended Log Format bridge for docker containers. It allows you to log to Seq, Slack, Azure Message queues, and also to log locally via jsonlog while sending your container logs to Logstash or another remote log server.
+This is a Docker logs multiplexing container. It provides a Graylog Extended Log Format bridge for docker containers. It allows you to log to Seq, Slack, Azure Message queues, and AWS CloudWatch; while also logging locally via jsonlog.
 
 Among other uses, this bad boy solves the issue described [here](https://github.com/moby/moby/issues/30887). When you are logging from your container to a 3rd-party logging provider - such as Logstash - you don't get any local logs for debugging. Why don't we have both? With Gandelf you can. You can use Gandelf as a logging middleware to log to local disk from multiple containers (with colors!) while still logging to remote 3rd party services.
 
