@@ -3,3 +3,4 @@ npm-debug.log
 .vscode
 bot-token.js
 \.idea/
+.dist
