@@ -37,6 +37,10 @@ services:
   logging:
    driver: gelf
    options:
+    # On Mac / Windows
+    # gelf-address: "udp://host.docker.internal:12201"
+    # On Linux
+    # Until this PR is merged and released: https://github.com/moby/moby/pull/40007
     gelf-address: "udp://localhost:12201"
   depends_on:
    - "gandelf"
