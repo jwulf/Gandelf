@@ -17,6 +17,8 @@ To log to Slack, set the `SLACK_API_TOKEN` environment variable with the [Slack 
 
 To log to SEQ, set the `SEQ_URL` environment variable to point to your Seq instance.
 
+To log to a Websocket, set the `WEBSOCKET_PORT` environment variable to the port value you want to serve on, and make sure to bind that port to an external interface.
+
 You can also use this to forward logs to a remote GELF log server while retaining locally-accessible logs via the gandelf container's jsonlog.
 
 See the included `docker-compose.yml` for an example configuration.

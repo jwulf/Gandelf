@@ -7,7 +7,7 @@
     "test": "I only test in production.",
     "build": "npm run clean && tsc",
     "clean": "rm -rf ./dist/* ",
-    "build:docker": "npm run build && docker build -t sitapati/gandelf:latest .",
+    "build:docker": "npm run build && docker build --no-cache -t gandelf .",
     "start": "node dist/index.js"
   },
   "repository": {
@@ -17,13 +17,14 @@
   "author": "Josh Wulf <josh@magikcraft.io>",
   "license": "ISC",
   "dependencies": {
+    "@magikcraft/graygelf": "^1.2.0",
     "azure-storage": "^2.0.0",
     "bottleneck": "^1.16.0",
     "chalk": "^2.3.2",
-    "@magikcraft/graygelf": "^1.2.0",
     "healthchecks.io": "^1.1.4",
     "node-fetch": "^1.6.3",
     "slackbots": "^1.0.2",
+    "socket.io": "^2.3.0",
     "structured-log": "0.0.18",
     "uncaught": "0.0.5"
   },

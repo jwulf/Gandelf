@@ -5,10 +5,11 @@ version: "2"
 services:
   gandelf:
     restart: always
-    image: sitapati/gandelf:latest
+    image: gandelf:latest
     container_name: gandelf
     ports:
       - "12201:12201/udp"
+      - "5001:5001"
     logging:
       driver: "json-file"
       options:
@@ -17,6 +18,8 @@ services:
     environment:
       #   - GELF_URL=my-gelf-log-server.com
       - ECHO_LOCAL=true
+      - WEBSOCKET_PORT=5001
+      - WEBSOCKET_CONSOLE=true
   ticker:
     restart: always
     image: mhart/alpine-node:12.10.0
@@ -28,7 +31,7 @@ services:
         # gelf-address: "udp://host.docker.internal:12201"
         # On Linux
         # Until this PR is merged and released: https://github.com/moby/moby/pull/40007
-        gelf-address: "udp://localhost:12201"
+        gelf-address: "udp://host.docker.internal:12201"
     volumes:
       - ./test:/test
     command: /test/ticker.sh

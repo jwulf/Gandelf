@@ -3,6 +3,7 @@ import slack from "./adapters/slack";
 import seq from "./adapters/seq";
 import azure from "./adapters/azure-msg-queue";
 import local from "./adapters/local-echo";
+import websocket from "./adapters/websocket";
 import healthcheck from "./adapters/healthchecks.io";
 
 import uncaught from "uncaught";
@@ -24,7 +25,7 @@ uncaught.addListener(error =>
   console.log("Uncaught error or rejection: ", error.message)
 );
 
-const adapters = [azure, local, seq, slack];
+const adapters = [azure, local, seq, slack, websocket];
 
 gelfServer.on("message", gelfMessage => {
   adapters.forEach(adapter => adapter(gelfMessage));
