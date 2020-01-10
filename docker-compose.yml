@@ -19,7 +19,7 @@ services:
       #   - GELF_URL=my-gelf-log-server.com
       - ECHO_LOCAL=true
       - WEBSOCKET_PORT=5001
-      - WEBSOCKET_CONSOLE=true
+      - WEBSOCKET_CONSOLE=http://localhost
   ticker:
     restart: always
     image: mhart/alpine-node:12.10.0

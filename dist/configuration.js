@@ -20,6 +20,7 @@ const HEALTHCHECKS_IO_HEARTBEAT_MINS = parseInt(process.env.HEALTHCHECKS_IO_HEAR
 // Websocket settings
 const WEBSOCKET_PORT = process.env.WEBSOCKET_PORT;
 const WEBSOCKET_CONSOLE = process.env.WEBSOCKET_CONSOLE;
+const WEBSOCKET_URL = process.env.WEBSOCKET_URL;
 const configuration = {
     Azure: {
         AzureConnectionString,

@@ -25,7 +25,7 @@ function initialise() {
     <title>Socket io client</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script>
-        var socket = io("http://localhost:${port}");
+        var socket = io("${Websocket.console}:${port}");
         // use your socket
         socket.on("broadcast", (message) => {
             // do something with the message.
