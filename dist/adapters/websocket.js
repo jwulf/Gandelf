@@ -25,7 +25,7 @@ function initialise() {
     <title>Socket io client</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script>
-        var socket = io("${Websocket.console}:${port}");
+        var socket = io(${Websocket.console}:${port});
         // use your socket
         socket.on("broadcast", (message) => {
             // do something with the message.
@@ -47,7 +47,8 @@ function initialise() {
     app.listen(port);
     console.log(chalk_1.default.bold(WSLogging + chalk_1.default.green("Enabled on port " + port)));
     if (Websocket.console) {
-        console.log(chalk_1.default.bold(WSLogging + chalk_1.default.green("Console enabled on port " + port)));
+        console.log(chalk_1.default.bold(WSLogging +
+            chalk_1.default.green(`Console enabled on ${Websocket.console}:${port}`)));
     }
     else {
         console.log(chalk_1.default.bold(WSLogging + chalk_1.default.red("Console disabled")));
