@@ -66,8 +66,9 @@ function initialise() {
   });
 
   const adapter = gelfMessage => {
+    console.log(gelfMessage);
     const msg = getMessage(gelfMessage);
-    const name = short(gelfMessage.host);
+    const name = short(gelfMessage._container_name);
     io.emit(name, { msg });
     io.emit("broadcast", { [name]: msg });
   };
