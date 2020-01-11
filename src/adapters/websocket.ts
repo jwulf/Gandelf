@@ -30,7 +30,7 @@ function initialise() {
         socket.on("broadcast", (message) => {
             // do something with the message.
             var div = document.getElementById('console');
-            div.innerHTML += JSON.stringify(message) + "\n";
+            div.innerHTML += JSON.stringify(message) + "\\n";
         })
     </script>
 </head>
