@@ -30,7 +30,7 @@ function initialise() {
         socket.on("broadcast", (message) => {
             // do something with the message.
             var div = document.getElementById('console');
-            div.innerHTML += JSON.stringify(message);
+            div.innerHTML += JSON.stringify(message) + "\n";
         })
     </script>
 </head>
@@ -69,7 +69,7 @@ function initialise() {
     const msg = getMessage(gelfMessage);
     const name = short(gelfMessage.host);
     io.emit(name, { msg });
-    io.emit("broadcast", { msg });
+    io.emit("broadcast", { name: msg });
   };
 
   return adapter;
