@@ -5,7 +5,7 @@ version: "2"
 services:
   gandelf:
     restart: always
-    image: gandelf:latest
+    image: gandelf:2.0.0
     container_name: gandelf
     ports:
       - "12201:12201/udp"
