@@ -13,13 +13,15 @@ Read about how to [specify it for your docker containers here](https://docs.dock
 You could spin up a singleton instance and point your Docker containers at it, or you
 could add it to a `docker-compose.yml` and deploy it alongside your container.
 
-To log to Slack, set the `SLACK_API_TOKEN` environment variable with the [Slack Bot API token](https://api.slack.com/bot-users) for your Slack team.
+## Logging targets
 
-To log to SEQ, set the `SEQ_URL` environment variable to point to your Seq instance.
+* To log to Slack, set the `SLACK_API_TOKEN` environment variable with the [Slack Bot API token](https://api.slack.com/bot-users) for your Slack team.
 
-To log to a Websocket, set the `WEBSOCKET_PORT` environment variable to the port value you want to serve on, and make sure to bind that port to an external interface.
+* To log to SEQ, set the `SEQ_URL` environment variable to point to your Seq instance.
 
-You can also use this to forward logs to a remote GELF log server while retaining locally-accessible logs via the gandelf container's jsonlog.
+* To log to a Websocket, set the `WEBSOCKET_PORT` environment variable to the port value you want to serve on, and make sure to bind that port to an external interface.
+
+* You can also use this to forward logs to a remote GELF log server while retaining locally-accessible logs via the gandelf container's jsonlog. To do this, set the `GELF_URL` environment variable to point to the remote GELF server.
 
 See the included `docker-compose.yml` for an example configuration.
 
